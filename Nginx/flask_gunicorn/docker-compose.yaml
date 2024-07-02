@@ -10,7 +10,7 @@ services:
     expose:
       - 8000
     environment:
-      - ENV=production
+      - ENV=testing
 
   nginx:
     build:
