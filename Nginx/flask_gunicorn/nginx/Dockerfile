@@ -1,10 +1,13 @@
-# Use the official Nginx image from the Docker Hub
-FROM nginx:latest
+# nginx/Dockerfile
 
-# Copy the custom Nginx configuration file into the container
+# Use the official nginx image from the Docker Hub
+FROM nginx:alpine
+
+# Copy custom nginx config
 COPY nginx_proxy.conf /etc/nginx/nginx.conf
 
-# Expose the port Nginx will run on
+# Expose port 80
 EXPOSE 80
 
-EXPOSE 443
+# Command to run nginx
+CMD ["nginx", "-g", "daemon off;"]
