@@ -6,6 +6,7 @@ import os
 import rollbar
 import rollbar.contrib.flask
 from flask import got_request_exception
+import logging
 
 # Load environment variables from the .env file
 load_dotenv()
@@ -13,6 +14,11 @@ load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
+
+logging.basicConfig(filename='app.log', level=logging.INFO,
+                    format='%(asctime)s %(levelname)s: %(message)s')
+
+app.logger.info("Flask app started!")
 
 rollbar.init(
             access_token=os.getenv('ROLLBAR_ACCESS_TOKEN'),  # Load Rollbar access token from .env
@@ -35,7 +41,6 @@ class Feedback(db.Model):
 # Route to submit feedback
 @app.route('/feedback', methods=['POST'])
 def submit_feedback():
-    print("DEBUG - in hello()")
     data = request.get_json()
     name = data.get('name')
     comment = data.get('comment')
@@ -65,11 +70,6 @@ if __name__ == '__main__':
     # Ensure tables are created at startup
     with app.app_context():
         db.create_all()
-        print("Tables created successfully!")
-
-        
-        
-
         # Send exceptions from `app` to Rollbar, using Flask's signal system
         got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
 

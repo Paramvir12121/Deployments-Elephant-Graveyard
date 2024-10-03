@@ -1,0 +1,21 @@
+2024-10-03 21:27:25,285 INFO: Flask app started!
+2024-10-03 21:27:25,304 WARNING:  * Debugger is active!
+2024-10-03 21:27:25,304 INFO:  * Debugger PIN: 124-443-250
+2024-10-03 21:27:49,718 INFO: 127.0.0.1 - - [03/Oct/2024 21:27:49] "GET /feedback HTTP/1.1" 200 -
+2024-10-03 21:27:49,964 INFO: 127.0.0.1 - - [03/Oct/2024 21:27:49] "GET /feedback HTTP/1.1" 200 -
+2024-10-03 21:28:03,897 INFO: 127.0.0.1 - - [03/Oct/2024 21:28:03] "OPTIONS /feedback HTTP/1.1" 200 -
+2024-10-03 21:28:04,192 INFO: 127.0.0.1 - - [03/Oct/2024 21:28:04] "[35m[1mPOST /feedback HTTP/1.1[0m" 201 -
+2024-10-03 21:28:31,715 INFO:  * Detected change in '/workspaces/Deployments-Elephant-Graveyard/terraform/three-tier/backend/app.py', reloading
+2024-10-03 21:28:32,236 INFO: Flask app started!
+2024-10-03 21:28:32,262 WARNING:  * Debugger is active!
+2024-10-03 21:28:32,263 INFO:  * Debugger PIN: 124-443-250
+2024-10-03 21:28:44,957 INFO:  * Detected change in '/workspaces/Deployments-Elephant-Graveyard/terraform/three-tier/backend/app.py', reloading
+2024-10-03 21:28:45,558 INFO: Flask app started!
+2024-10-03 21:28:45,577 WARNING:  * Debugger is active!
+2024-10-03 21:28:45,577 INFO:  * Debugger PIN: 124-443-250
+2024-10-03 21:28:49,390 INFO:  * Detected change in '/workspaces/Deployments-Elephant-Graveyard/terraform/three-tier/backend/app.py', reloading
+2024-10-03 21:28:49,921 INFO: Flask app started!
+2024-10-03 21:28:49,939 WARNING:  * Debugger is active!
+2024-10-03 21:28:49,939 INFO:  * Debugger PIN: 124-443-250
+2024-10-03 21:30:41,717 INFO: 127.0.0.1 - - [03/Oct/2024 21:30:41] "OPTIONS /feedback HTTP/1.1" 200 -
+2024-10-03 21:30:41,998 INFO: 127.0.0.1 - - [03/Oct/2024 21:30:41] "[35m[1mPOST /feedback HTTP/1.1[0m" 201 -
