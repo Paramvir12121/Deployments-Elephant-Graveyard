@@ -1,6 +1,15 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+from python_dotenv import read_dotenv
+
+# Load environment variables from .env file
+
+
+import os
+import rollbar
+import rollbar.contrib.flask
+from flask import got_request_exception
 
 app = Flask(__name__)
 CORS(app)
@@ -9,6 +18,7 @@ CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///feedback.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+    
 
 # Define the Feedback model
 class Feedback(db.Model):
@@ -44,4 +54,17 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
         print("Tables created successfully!")
+        """init rollbar module"""
+        rollbar.init(
+            # access token
+            '',
+            # environment name - any string, like 'production' or 'development'
+            'flasktest',
+            # server root directory, makes tracebacks prettier
+        root=os.path.dirname(os.path.realpath(__file__)),
+        # flask already sets up logging
+        allow_logging_basic_config=False)
+
+    # send exceptions from `app` to rollbar, using flask's signal system.
+    got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
     app.run(debug=True)
