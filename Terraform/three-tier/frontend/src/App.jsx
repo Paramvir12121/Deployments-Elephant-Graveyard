@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
+// const api = "https://scaling-space-halibut-qv4w4xjq5xjh6gx-5000.app.github.dev/feedback"
+const api = "http://localhost:5000/feedback"
+
 function App() {
   const [name, setName] = useState('');
   const [comment, setComment] = useState('');
@@ -8,7 +11,7 @@ function App() {
 
   useEffect(() => {
     // Fetch feedback from the backend
-    fetch('https://scaling-space-halibut-qv4w4xjq5xjh6gx-5000.app.github.dev/feedback')
+    fetch(api)
       .then(response => response.json())
       .then(data => setFeedbacks(data));
   }, []);
@@ -19,7 +22,7 @@ function App() {
     const newFeedback = { name, comment };
 
     // Send feedback to the backend
-    fetch('https://scaling-space-halibut-qv4w4xjq5xjh6gx-5000.app.github.dev/feedback', {
+    fetch(api, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
