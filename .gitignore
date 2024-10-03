@@ -48,5 +48,4 @@ htmlcov/
 docs/_build/
 
 
-.env
 .env*

@@ -1,24 +1,30 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from python_dotenv import read_dotenv
-
-# Load environment variables from .env file
-
-
+from dotenv import load_dotenv
 import os
 import rollbar
 import rollbar.contrib.flask
 from flask import got_request_exception
 
+# Load environment variables from the .env file
+load_dotenv()
+
+
 app = Flask(__name__)
 CORS(app)
 
-# Configuration for SQLite database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///feedback.db'
+rollbar.init(
+            access_token=os.getenv('ROLLBAR_ACCESS_TOKEN'),  # Load Rollbar access token from .env
+            environment=os.getenv('FLASK_ENV', 'development'),  # Default to development if not specified
+            root=os.path.dirname(os.path.realpath(__file__)),
+            allow_logging_basic_config=False
+        )
+
+# Configuration for SQLite database (from .env)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///feedback.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-    
 
 # Define the Feedback model
 class Feedback(db.Model):
@@ -29,6 +35,7 @@ class Feedback(db.Model):
 # Route to submit feedback
 @app.route('/feedback', methods=['POST'])
 def submit_feedback():
+    print("DEBUG - in hello()")
     data = request.get_json()
     name = data.get('name')
     comment = data.get('comment')
@@ -42,6 +49,11 @@ def submit_feedback():
 
     return jsonify({'message': 'Feedback submitted successfully'}), 201
 
+@app.route('/cause-error')
+def cause_error():
+    # Intentionally raise an error to trigger Rollbar
+    raise Exception("This is a test exception to trigger Rollbar!")
+
 # Route to get all feedback
 @app.route('/feedback', methods=['GET'])
 def get_feedback():
@@ -54,17 +66,11 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
         print("Tables created successfully!")
-        """init rollbar module"""
-        rollbar.init(
-            # access token
-            '',
-            # environment name - any string, like 'production' or 'development'
-            'flasktest',
-            # server root directory, makes tracebacks prettier
-        root=os.path.dirname(os.path.realpath(__file__)),
-        # flask already sets up logging
-        allow_logging_basic_config=False)
 
-    # send exceptions from `app` to rollbar, using flask's signal system.
-    got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
+        
+        
+
+        # Send exceptions from `app` to Rollbar, using Flask's signal system
+        got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
+
     app.run(debug=True)

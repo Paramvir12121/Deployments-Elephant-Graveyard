@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
-// const api = "https://scaling-space-halibut-qv4w4xjq5xjh6gx-5000.app.github.dev/feedback"
-const api = "http://localhost:5000/feedback"
+const api = import.meta.env.VITE_API_URL;
 
 function App() {
   const [name, setName] = useState('');
@@ -10,8 +9,7 @@ function App() {
   const [feedbacks, setFeedbacks] = useState([]);
 
   useEffect(() => {
-    // Fetch feedback from the backend
-    fetch(api)
+    fetch(`${api}/feedback`)
       .then(response => response.json())
       .then(data => setFeedbacks(data));
   }, []);
@@ -22,7 +20,7 @@ function App() {
     const newFeedback = { name, comment };
 
     // Send feedback to the backend
-    fetch(api, {
+    fetch(`${api}/feedback`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -39,8 +37,25 @@ function App() {
     .catch(error => console.error('Error:', error));
   };
 
+  const handleRaiseException = async () => {
+    try {
+
+      const response = await fetch(`${api}/cause-error`, {
+        method: 'GET'
+      });
+      if (response.ok) {
+        console.log('Exception triggered successfully.');
+      } else {
+        console.log('Failed to trigger exception.');
+      }
+    } catch (error) {
+      console.error('Error while making request:', error);
+    }
+  };
+
   return (
     <div className="App">
+      
       <h1>Feedback Form</h1>
       <form onSubmit={handleSubmit}>
         <div>
@@ -62,7 +77,8 @@ function App() {
         </div>
         <button type="submit">Submit</button>
       </form>
-
+        
+      <button onClick={handleRaiseException}>Trigger Error</button>
       <h2>Feedback List</h2>
       <ul>
         {feedbacks.map(feedback => (
