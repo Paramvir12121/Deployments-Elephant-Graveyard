@@ -19,3 +19,11 @@
 2024-10-03 21:28:49,939 INFO:  * Debugger PIN: 124-443-250
 2024-10-03 21:30:41,717 INFO: 127.0.0.1 - - [03/Oct/2024 21:30:41] "OPTIONS /feedback HTTP/1.1" 200 -
 2024-10-03 21:30:41,998 INFO: 127.0.0.1 - - [03/Oct/2024 21:30:41] "[35m[1mPOST /feedback HTTP/1.1[0m" 201 -
+2024-10-04 01:20:11,585 INFO: Flask app started!
+2024-10-04 01:20:11,651 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-10-04 01:20:11,651 INFO: [33mPress CTRL+C to quit[0m
+2024-10-04 01:20:11,652 INFO:  * Restarting with stat
+2024-10-04 01:20:12,541 INFO: Flask app started!
+2024-10-04 01:20:12,566 WARNING:  * Debugger is active!
+2024-10-04 01:20:12,620 INFO:  * Debugger PIN: 743-998-200
