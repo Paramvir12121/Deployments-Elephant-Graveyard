@@ -7,7 +7,7 @@ COPY package.json package-lock.json ./
 RUN npm install
 
 COPY . .
-RUN npm run build
+# RUN npm run build
 
 EXPOSE 5173
 # run the vite react app
