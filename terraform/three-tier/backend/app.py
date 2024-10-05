@@ -15,6 +15,8 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
+
+
 logging.basicConfig(filename='app.log', level=logging.INFO,
                     format='%(asctime)s %(levelname)s: %(message)s')
 
@@ -31,6 +33,11 @@ rollbar.init(
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///feedback.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+
+with app.app_context():
+    db.create_all()
+    print("Database tables created.")
 
 # Define the Feedback model
 class Feedback(db.Model):
@@ -70,6 +77,7 @@ if __name__ == '__main__':
     # Ensure tables are created at startup
     with app.app_context():
         db.create_all()
+        print("Database tables created successfully.")
         # Send exceptions from `app` to Rollbar, using Flask's signal system
         got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
 

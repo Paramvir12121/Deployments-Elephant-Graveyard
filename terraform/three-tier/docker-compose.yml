@@ -19,14 +19,14 @@ services:
     env_file:
       - ./backend/.env
 
-  # db:
-  #   image: postgres:latest
-  #   environment:
-  #     POSTGRES_USER: user
-  #     POSTGRES_PASSWORD: password
-  #     POSTGRES_DB: mydatabase
-  #   volumes:
-  #     - db-data:/var/lib/postgresql/data
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
+    volumes:
+      - db-data:/var/lib/postgresql/data
 
-# volumes:
-#   db-data:
+volumes:
+  db-data: 
