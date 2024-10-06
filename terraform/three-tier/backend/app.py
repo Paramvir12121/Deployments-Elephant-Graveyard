@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import DeclarativeBase
 from flask_cors import CORS
 from dotenv import load_dotenv
 import os
@@ -7,15 +8,11 @@ import rollbar
 import rollbar.contrib.flask
 from flask import got_request_exception
 import logging
-
 # Load environment variables from the .env file
 load_dotenv()
 
-
 app = Flask(__name__)
 CORS(app)
-
-
 
 logging.basicConfig(filename='app.log', level=logging.INFO,
                     format='%(asctime)s %(levelname)s: %(message)s')
@@ -35,15 +32,17 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
-with app.app_context():
-    db.create_all()
-    print("Database tables created.")
+
 
 # Define the Feedback model
 class Feedback(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     comment = db.Column(db.String(200), nullable=False)
+
+with app.app_context():
+    db.create_all()
+    print("Database tables created.")
 
 # Route to submit feedback
 @app.route('/feedback', methods=['POST'])
